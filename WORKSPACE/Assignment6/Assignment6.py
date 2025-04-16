@@ -10,21 +10,32 @@ dataset = pd.read_csv('Social_Network_Ads.csv')
 X = dataset.iloc[:, :-1].to_numpy()
 y = dataset.iloc[:, -1].to_numpy()
 
-# Manually adding polynomial features
-X = np.column_stack((X, X[:, 0] ** 2))
-X = np.column_stack((X, X[:, 1] ** 2))
-X = np.column_stack((X, X[:, 0] * X[:, 1]))
+from sklearn.preprocessing import PolynomialFeatures
+poly_feature = PolynomialFeatures(degree=2, include_bias=False)
+poly_feature.fit(X)
+X_poly_feature = poly_feature.transform(X)
+
+
+
+
+#Manually adding polynomial features
+#X = np.column_stack((X, X[:, 0] ** 2))
+#X = np.column_stack((X, X[:, 1] ** 2))
+#X = np.column_stack((X, X[:, 0] * X[:, 1]))
+
 
 # Splitting the dataset into training and test sets
 from sklearn.model_selection import train_test_split
 X_train, X_test, y_train, y_test = train_test_split(
-    X, y, test_size=0.25, random_state=0)
+    X_poly_feature, y, test_size=0.25, random_state=0)
+
 
 # Feature scaling
 from sklearn.preprocessing import StandardScaler
 sc = StandardScaler()
 X_train = sc.fit_transform(X_train)
 X_test = sc.transform(X_test)
+
 
 # Fitting Logistic Regression to the training set
 from sklearn.linear_model import LogisticRegression
@@ -56,21 +67,19 @@ X1, X2 = np.meshgrid(
 
 
 two_column_matrix = np.c_[X1.ravel(), X2.ravel()]
-poly_matrix = np.column_stack((
-    two_column_matrix,
-    two_column_matrix[:, 0] ** 2,
-    two_column_matrix[:, 1] ** 2,
-    two_column_matrix[:, 0] * two_column_matrix[:, 1]
-))
+
+
+poly_matrix = poly_feature.transform(two_column_matrix)
+
 
 inverse_transformed = sc.inverse_transform(poly_matrix)
+
+
 first_two_columns = inverse_transformed[:, :2]
-poly_matrix_from_inverse = np.column_stack((
-    first_two_columns,
-    first_two_columns[:, 0] ** 2,
-    first_two_columns[:, 1] ** 2,
-    first_two_columns[:, 0] * first_two_columns[:, 1]
-))
+
+
+
+poly_matrix_from_inverse = poly_feature.transform(first_two_columns)
 
 
 X_grid = sc.transform(poly_matrix_from_inverse)
@@ -79,7 +88,7 @@ plt.contourf(
     X1, X2,
     classifier.predict(X_grid).reshape(X1.shape),
     alpha=0.75,
-    cmap=ListedColormap(['red', 'green'])
+    стар=ListedColormap(['red', 'green'])
 )
 
 plt.xlim(X1.min(), X1.max())
@@ -100,7 +109,6 @@ plt.ylabel('Feature 2 (scaled)')
 plt.show()
 
 
-
 #################################### Visualizing test set  #################################### 
 X_set, y_set = X_test, y_test
 
@@ -111,21 +119,18 @@ X1, X2 = np.meshgrid(
 
 
 two_column_matrix = np.c_[X1.ravel(), X2.ravel()]
-poly_matrix = np.column_stack((
-    two_column_matrix,
-    two_column_matrix[:, 0] ** 2,
-    two_column_matrix[:, 1] ** 2,
-    two_column_matrix[:, 0] * two_column_matrix[:, 1]
-))
+
+
+poly_matrix = poly_feature.transform(two_column_matrix)
+
 
 inverse_transformed = sc.inverse_transform(poly_matrix)
+
+
 first_two_columns = inverse_transformed[:, :2]
-poly_matrix_from_inverse = np.column_stack((
-    first_two_columns,
-    first_two_columns[:, 0] ** 2,
-    first_two_columns[:, 1] ** 2,
-    first_two_columns[:, 0] * first_two_columns[:, 1]
-))
+
+
+poly_matrix_from_inverse = poly_feature.transform(first_two_columns)
 
 
 X_grid = sc.transform(poly_matrix_from_inverse)
@@ -134,7 +139,7 @@ plt.contourf(
     X1, X2,
     classifier.predict(X_grid).reshape(X1.shape),
     alpha=0.75,
-    cmap=ListedColormap(['red', 'green'])
+    стар=ListedColormap(['red', 'green'])
 )
 
 plt.xlim(X1.min(), X1.max())
@@ -149,10 +154,13 @@ for i, j in enumerate(np.unique(y_set)):
         label=j
     )
 
-plt.title('Logistic Regression (Test set)')
+plt.title('Logistic Regression (test set)')
 plt.xlabel('Feature 1 (scaled)')
 plt.ylabel('Feature 2 (scaled)')
 plt.show()
+
+
+
 
 
 
