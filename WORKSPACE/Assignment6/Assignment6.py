@@ -1,74 +1,62 @@
 # -*- coding: utf-8 -*-
 
-#importing the libraries
+# Importing libraries
 import numpy as np
 import matplotlib.pyplot as plt
 import pandas as pd
 
-#importing the dataset 
+# Importing the dataset
 dataset = pd.read_csv('Social_Network_Ads.csv')
 X = dataset.iloc[:, :-1].to_numpy()
 y = dataset.iloc[:, -1].to_numpy()
 
-
-
+# Manually adding polynomial features
 X = np.column_stack((X, X[:, 0] ** 2))
 X = np.column_stack((X, X[:, 1] ** 2))
 X = np.column_stack((X, X[:, 0] * X[:, 1]))
 
-
- 
-
-#Splitting the dataset into the training set and test
+# Splitting the dataset into training and test sets
 from sklearn.model_selection import train_test_split
-X_train, X_test, y_train, y_test =  train_test_split(X,
-                                                     y, test_size = 0.25,
-                                                     random_state = 0)
+X_train, X_test, y_train, y_test = train_test_split(
+    X, y, test_size=0.25, random_state=0)
 
-
-
-
-#Feature scaling/ we don't need feature scaling 
-from sklearn.preprocessing import StandardScaler 
+# Feature scaling
+from sklearn.preprocessing import StandardScaler
 sc = StandardScaler()
 X_train = sc.fit_transform(X_train)
 X_test = sc.transform(X_test)
 
-
-# Fitting the logistic regression  on training datataset 
-from sklearn.linear_model import LogisticRegression 
+# Fitting Logistic Regression to the training set
+from sklearn.linear_model import LogisticRegression
 classifier = LogisticRegression()
 classifier.fit(X_train, y_train)
 
-#predicting the test results 
+# Predicting the test results
 y_pred = classifier.predict(X_test)
 
-
+# Confusion matrix and accuracy
 from sklearn.metrics import confusion_matrix, accuracy_score
 print(confusion_matrix(y_test, y_pred))
 print(accuracy_score(y_test, y_pred))
 
+# --- Phase 1: Get unscaled X1 and X2 from the grid ---
 
-
-
-# Visualizing the Training set results
 from matplotlib.colors import ListedColormap
+
+# Visualizing set
 X_set, y_set = X_train, y_train
-X1, X2 = np.meshgrid(np.arange(start = X_set[:, 0].min() - 1,
-                               stop = X_set[:, 0].max() + 1, step = 0.01),
-                     np.arange(start = X_set[:, 1].min() - 1,
-                               stop = X_set[:, 1].max() + 1, step = 0.01))
 
+# Step 1: Generate meshgrid
+X1, X2 = np.meshgrid(
+    np.arange(start=X_set[:, 0].min() - 1, stop=X_set[:, 0].max() + 1, step=0.01),
+    np.arange(start=X_set[:, 1].min() - 1, stop=X_set[:, 1].max() + 1, step=0.01)
+)
 
+# Step 2: Stack into two-column matrix
 two_column_matrix = np.c_[X1.ravel(), X2.ravel()]
 
-
-
-
-
-
-# Step 2: Apply same polynomial transformation as before
-two_column_matrix = np.column_stack((
+# Step 3: Add polynomial features (manually)
+poly_matrix = np.column_stack((
     two_column_matrix,
     two_column_matrix[:, 0] ** 2,
     two_column_matrix[:, 1] ** 2,
@@ -77,89 +65,56 @@ two_column_matrix = np.column_stack((
 
 
 
-two_column_matrix_scaled = sc.transform(two_column_matrix)
 
 
 
+# Step 4: Inverse transform using existing StandardScaler
+inverse_transformed = sc.inverse_transform(poly_matrix)
 
+# Step 5: Extract first two columns (unscaled X1 and X2)
+first_two_columns = inverse_transformed[:, :2]
 
+# --- Phase 2: Transform back to scaled polynomial space ---
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-from matplotlib.colors import ListedColormap
-# Phase 1: Generate mesh grid and prepare it for scaling
-X1_m, X2_m = np.meshgrid(X, y)
-
-
-
-
-
-# Step 2: Flatten X1 and X2 and stack into 2D array
-X_grid_base = np.array([X1.ravel(), X2.ravel()]).T
-
-print(X_grid_base)
-
-# Step 3: Add polynomial features (X^2, Y^2, XY)
-X_poly_base = np.column_stack((
-    X_grid_base,
-    X_grid_base[:, 0] ** 2,
-    X_grid_base[:, 1] ** 2,
-    X_grid_base[:, 0] * X_grid_base[:, 1]
+# Step 6: Recreate polynomial features from unscaled first two columns
+poly_matrix_from_inverse = np.column_stack((
+    first_two_columns,
+    first_two_columns[:, 0] ** 2,
+    first_two_columns[:, 1] ** 2,
+    first_two_columns[:, 0] * first_two_columns[:, 1]
 ))
 
-print(X_poly_base)
-
-# Step 4: Use scaler to transform this
-X_poly_scaled = sc.transform(X_poly_base)
-
-print(X_poly_scaled)
 
 
-# Phase 3: Plotting decision boundary
+
+
+
+# Step 7: Apply scaler again to get scaled grid features
+X_grid = sc.transform(poly_matrix_from_inverse)
+
 plt.contourf(
-    X1,
-    X2,
-    classifier.predict(X_poly_scaled).reshape(X1.shape),
+    X1, X2,
+    classifier.predict(X_grid).reshape(X1.shape),
     alpha=0.75,
     cmap=ListedColormap(['red', 'green'])
 )
 
-# Plot original data points
-for i, j in enumerate(np.unique(y)):
+plt.xlim(X1.min(), X1.max())
+plt.ylim(X2.min(), X2.max())
+
+# (Optional) You can also plot the actual training points
+for i, j in enumerate(np.unique(y_set)):
     plt.scatter(
-        X_train[y_train == j, 0],
-        X_train[y_train == j, 1],
+        X_set[y_set == j, 0],
+        X_set[y_set == j, 1],
         c=ListedColormap(['red', 'green'])(i),
         label=j
     )
 
-plt.title('Logistic Regression (Polynomial Features)')
-plt.xlabel('Age (scaled)')
-plt.ylabel('Estimated Salary (scaled)')
+plt.title('Logistic Regression (Training set)')
+plt.xlabel('Feature 1 (scaled)')
+plt.ylabel('Feature 2 (scaled)')
 plt.legend()
 plt.show()
+
+
