@@ -1,0 +1,299 @@
+# Aime Byiringiro
+
+# Importing the dataset
+dataset = read.csv('Housing_Data.csv', skip = 1)
+dataset = dataset[, c("X1", "X2", "X3", "X4", "X5", "X6", "Y")]
+
+library(e1071)
+library(randomForest)
+
+
+
+# Run 1
+sample_index = sample(1:nrow(dataset), 0.75 * nrow(dataset))
+train = dataset[sample_index, ]
+test = dataset[-sample_index, ]
+regressor = svm(formula = Y ~ ., data = train, type = 'eps-regression', kernel = 'radial')
+y_pred = predict(regressor, newdata = test)
+ssr = sum((test$Y - y_pred)^2)
+sst = sum((test$Y - mean(test$Y))^2)
+r2 = 1 - (ssr / sst)
+adj_r2_1 = 1 - (1 - r2) * (nrow(test) - 1) / (nrow(test) - 6 - 1)
+print(paste("Run 1 Adjusted R2:", adj_r2_1))
+
+
+# Run 2
+sample_index = sample(1:nrow(dataset), 0.75 * nrow(dataset))
+train = dataset[sample_index, ]
+test = dataset[-sample_index, ]
+regressor = svm(formula = Y ~ ., data = train, type = 'eps-regression', kernel = 'radial')
+y_pred = predict(regressor, newdata = test)
+ssr = sum((test$Y - y_pred)^2)
+sst = sum((test$Y - mean(test$Y))^2)
+r2 = 1 - (ssr / sst)
+adj_r2_2 = 1 - (1 - r2) * (nrow(test) - 1) / (nrow(test) - 6 - 1)
+print(paste("Run 2 Adjusted R2:", adj_r2_2))
+
+
+# Run 3
+sample_index = sample(1:nrow(dataset), 0.75 * nrow(dataset))
+train = dataset[sample_index, ]
+test = dataset[-sample_index, ]
+regressor = svm(formula = Y ~ ., data = train, type = 'eps-regression', kernel = 'radial')
+y_pred = predict(regressor, newdata = test)
+ssr = sum((test$Y - y_pred)^2)
+sst = sum((test$Y - mean(test$Y))^2)
+r2 = 1 - (ssr / sst)
+adj_r2_3 = 1 - (1 - r2) * (nrow(test) - 1) / (nrow(test) - 6 - 1)
+print(paste("Run 3 Adjusted R3:", adj_r2_3))
+
+
+# Run 4
+sample_index = sample(1:nrow(dataset), 0.75 * nrow(dataset))
+train = dataset[sample_index, ]
+test = dataset[-sample_index, ]
+regressor = svm(formula = Y ~ ., data = train, type = 'eps-regression', kernel = 'radial')
+y_pred = predict(regressor, newdata = test)
+ssr = sum((test$Y - y_pred)^2)
+sst = sum((test$Y - mean(test$Y))^2)
+r2 = 1 - (ssr / sst)
+adj_r2_4 = 1 - (1 - r2) * (nrow(test) - 1) / (nrow(test) - 6 - 1)
+print(paste("Run 4 Adjusted R2:", adj_r2_4))
+
+
+# Run 5
+sample_index = sample(1:nrow(dataset), 0.75 * nrow(dataset))
+train = dataset[sample_index, ]
+test = dataset[-sample_index, ]
+regressor = svm(formula = Y ~ ., data = train, type = 'eps-regression', kernel = 'radial')
+y_pred = predict(regressor, newdata = test)
+ssr = sum((test$Y - y_pred)^2)
+sst = sum((test$Y - mean(test$Y))^2)
+r2 = 1 - (ssr / sst)
+adj_r2_5 = 1 - (1 - r2) * (nrow(test) - 1) / (nrow(test) - 6 - 1)
+print(paste("Run 5 Adjusted R2:", adj_r2_5))
+
+
+
+# Run 6
+sample_index = sample(1:nrow(dataset), 0.75 * nrow(dataset))
+train = dataset[sample_index, ]
+test = dataset[-sample_index, ]
+regressor = svm(formula = Y ~ ., data = train, type = 'eps-regression', kernel = 'radial')
+y_pred = predict(regressor, newdata = test)
+ssr = sum((test$Y - y_pred)^2)
+sst = sum((test$Y - mean(test$Y))^2)
+r2 = 1 - (ssr / sst)
+adj_r2_6 = 1 - (1 - r2) * (nrow(test) - 1) / (nrow(test) - 6 - 1)
+print(paste("Run 6 Adjusted R2:", adj_r2_6))
+
+
+# Run 7
+sample_index = sample(1:nrow(dataset), 0.75 * nrow(dataset))
+train = dataset[sample_index, ]
+test = dataset[-sample_index, ]
+regressor = svm(formula = Y ~ ., data = train, type = 'eps-regression', kernel = 'radial')
+y_pred = predict(regressor, newdata = test)
+ssr = sum((test$Y - y_pred)^2)
+sst = sum((test$Y - mean(test$Y))^2)
+r2 = 1 - (ssr / sst)
+adj_r2_7 = 1 - (1 - r2) * (nrow(test) - 1) / (nrow(test) - 6 - 1)
+print(paste("Run 7 Adjusted R3:", adj_r2_7))
+
+
+
+# Run 8
+sample_index = sample(1:nrow(dataset), 0.75 * nrow(dataset))
+train = dataset[sample_index, ]
+test = dataset[-sample_index, ]
+regressor = svm(formula = Y ~ ., data = train, type = 'eps-regression', kernel = 'radial')
+y_pred = predict(regressor, newdata = test)
+ssr = sum((test$Y - y_pred)^2)
+sst = sum((test$Y - mean(test$Y))^2)
+r2 = 1 - (ssr / sst)
+adj_r2_8 = 1 - (1 - r2) * (nrow(test) - 1) / (nrow(test) - 6 - 1)
+print(paste("Run 8 Adjusted R2:", adj_r2_8))
+
+
+# Run 9
+sample_index = sample(1:nrow(dataset), 0.75 * nrow(dataset))
+train = dataset[sample_index, ]
+test = dataset[-sample_index, ]
+regressor = svm(formula = Y ~ ., data = train, type = 'eps-regression', kernel = 'radial')
+y_pred = predict(regressor, newdata = test)
+ssr = sum((test$Y - y_pred)^2)
+sst = sum((test$Y - mean(test$Y))^2)
+r2 = 1 - (ssr / sst)
+adj_r2_9 = 1 - (1 - r2) * (nrow(test) - 1) / (nrow(test) - 6 - 1)
+print(paste("Run 9 Adjusted R3:", adj_r2_9))
+
+
+
+# Run 10
+sample_index = sample(1:nrow(dataset), 0.75 * nrow(dataset))
+train = dataset[sample_index, ]
+test = dataset[-sample_index, ]
+regressor = svm(formula = Y ~ ., data = train, type = 'eps-regression', kernel = 'radial')
+y_pred = predict(regressor, newdata = test)
+ssr = sum((test$Y - y_pred)^2)
+sst = sum((test$Y - mean(test$Y))^2)
+r2 = 1 - (ssr / sst)
+adj_r2_10 = 1 - (1 - r2) * (nrow(test) - 1) / (nrow(test) - 6 - 1)
+print(paste("Run 10 Adjusted R2:", adj_r2_10))
+
+
+
+avg_r2_svr = mean(c(adj_r2_1, adj_r2_2, adj_r2_3, adj_r2_4, adj_r2_5,adj_r2_6, adj_r2_7, adj_r2_8, adj_r2_9, adj_r2_10))
+
+
+print(paste("SVR Average Adjusted R2:", avg_r2_svr))
+
+
+
+########################################################################
+
+# RF Run 1
+sample_index = sample(1:nrow(dataset), 0.75 * nrow(dataset))
+train = dataset[sample_index, ]
+test = dataset[-sample_index, ]
+rf_model = randomForest(Y ~ ., data = train, ntree = 500)
+y_pred_rf = predict(rf_model, newdata = test)
+ssr_rf = sum((test$Y - y_pred_rf)^2)
+sst_rf = sum((test$Y - mean(test$Y))^2)
+r2_rf = 1 - (ssr_rf / sst_rf)
+adj_r2_rf_1 = 1 - (1 - r2_rf) * (nrow(test) - 1) / (nrow(test) - 6 - 1)
+print(paste("RF Run 1 Adjusted R2:", adj_r2_rf_1))
+
+
+# RF Run 2
+sample_index = sample(1:nrow(dataset), 0.75 * nrow(dataset))
+train = dataset[sample_index, ]
+test = dataset[-sample_index, ]
+rf_model = randomForest(Y ~ ., data = train, ntree = 500)
+y_pred_rf = predict(rf_model, newdata = test)
+ssr_rf = sum((test$Y - y_pred_rf)^2)
+sst_rf = sum((test$Y - mean(test$Y))^2)
+r2_rf = 1 - (ssr_rf / sst_rf)
+adj_r2_rf_2 = 1 - (1 - r2_rf) * (nrow(test) - 1) / (nrow(test) - 6 - 1)
+print(paste("RF Run 2 Adjusted R2:", adj_r2_rf_2))
+
+
+# RF Run 3
+sample_index = sample(1:nrow(dataset), 0.75 * nrow(dataset))
+train = dataset[sample_index, ]
+test = dataset[-sample_index, ]
+rf_model = randomForest(Y ~ ., data = train, ntree = 500)
+y_pred_rf = predict(rf_model, newdata = test)
+ssr_rf = sum((test$Y - y_pred_rf)^2)
+sst_rf = sum((test$Y - mean(test$Y))^2)
+r2_rf = 1 - (ssr_rf / sst_rf)
+adj_r2_rf_3 = 1 - (1 - r2_rf) * (nrow(test) - 1) / (nrow(test) - 6 - 1)
+print(paste("RF Run 3 Adjusted R2:", adj_r2_rf_3))
+
+
+# RF Run 4
+sample_index = sample(1:nrow(dataset), 0.75 * nrow(dataset))
+train = dataset[sample_index, ]
+test = dataset[-sample_index, ]
+rf_model = randomForest(Y ~ ., data = train, ntree = 500)
+y_pred_rf = predict(rf_model, newdata = test)
+ssr_rf = sum((test$Y - y_pred_rf)^2)
+sst_rf = sum((test$Y - mean(test$Y))^2)
+r2_rf = 1 - (ssr_rf / sst_rf)
+adj_r2_rf_4 = 1 - (1 - r2_rf) * (nrow(test) - 1) / (nrow(test) - 6 - 1)
+print(paste("RF Run 4 Adjusted R2:", adj_r2_rf_4))
+
+
+# RF Run 5
+sample_index = sample(1:nrow(dataset), 0.75 * nrow(dataset))
+train = dataset[sample_index, ]
+test = dataset[-sample_index, ]
+rf_model = randomForest(Y ~ ., data = train, ntree = 500)
+y_pred_rf = predict(rf_model, newdata = test)
+ssr_rf = sum((test$Y - y_pred_rf)^2)
+sst_rf = sum((test$Y - mean(test$Y))^2)
+r2_rf = 1 - (ssr_rf / sst_rf)
+adj_r2_rf_5 = 1 - (1 - r2_rf) * (nrow(test) - 1) / (nrow(test) - 6 - 1)
+print(paste("RF Run 5 Adjusted R2:", adj_r2_rf_5))
+
+
+# RF Run 6
+sample_index = sample(1:nrow(dataset), 0.75 * nrow(dataset))
+train = dataset[sample_index, ]
+test = dataset[-sample_index, ]
+rf_model = randomForest(Y ~ ., data = train, ntree = 500)
+y_pred_rf = predict(rf_model, newdata = test)
+ssr_rf = sum((test$Y - y_pred_rf)^2)
+sst_rf = sum((test$Y - mean(test$Y))^2)
+r2_rf = 1 - (ssr_rf / sst_rf)
+adj_r2_rf_6 = 1 - (1 - r2_rf) * (nrow(test) - 1) / (nrow(test) - 6 - 1)
+print(paste("RF Run 6 Adjusted R2:", adj_r2_rf_6))
+
+
+# RF Run 7
+sample_index = sample(1:nrow(dataset), 0.75 * nrow(dataset))
+train = dataset[sample_index, ]
+test = dataset[-sample_index, ]
+rf_model = randomForest(Y ~ ., data = train, ntree = 500)
+y_pred_rf = predict(rf_model, newdata = test)
+ssr_rf = sum((test$Y - y_pred_rf)^2)
+sst_rf = sum((test$Y - mean(test$Y))^2)
+r2_rf = 1 - (ssr_rf / sst_rf)
+adj_r2_rf_7 = 1 - (1 - r2_rf) * (nrow(test) - 1) / (nrow(test) - 6 - 1)
+print(paste("RF Run 7 Adjusted R2:", adj_r2_rf_7))
+
+
+# RF Run 8
+sample_index = sample(1:nrow(dataset), 0.75 * nrow(dataset))
+train = dataset[sample_index, ]
+test = dataset[-sample_index, ]
+rf_model = randomForest(Y ~ ., data = train, ntree = 500)
+y_pred_rf = predict(rf_model, newdata = test)
+ssr_rf = sum((test$Y - y_pred_rf)^2)
+sst_rf = sum((test$Y - mean(test$Y))^2)
+r2_rf = 1 - (ssr_rf / sst_rf)
+adj_r2_rf_8 = 1 - (1 - r2_rf) * (nrow(test) - 1) / (nrow(test) - 6 - 1)
+print(paste("RF Run 8 Adjusted R2:", adj_r2_rf_8))
+
+
+# RF Run 9
+sample_index = sample(1:nrow(dataset), 0.75 * nrow(dataset))
+train = dataset[sample_index, ]
+test = dataset[-sample_index, ]
+rf_model = randomForest(Y ~ ., data = train, ntree = 500)
+y_pred_rf = predict(rf_model, newdata = test)
+ssr_rf = sum((test$Y - y_pred_rf)^2)
+sst_rf = sum((test$Y - mean(test$Y))^2)
+r2_rf = 1 - (ssr_rf / sst_rf)
+adj_r2_rf_9 = 1 - (1 - r2_rf) * (nrow(test) - 1) / (nrow(test) - 6 - 1)
+print(paste("RF Run 9 Adjusted R2:", adj_r2_rf_9))
+
+
+# RF Run 10
+sample_index = sample(1:nrow(dataset), 0.75 * nrow(dataset))
+train = dataset[sample_index, ]
+test = dataset[-sample_index, ]
+rf_model = randomForest(Y ~ ., data = train, ntree = 500)
+y_pred_rf = predict(rf_model, newdata = test)
+ssr_rf = sum((test$Y - y_pred_rf)^2)
+sst_rf = sum((test$Y - mean(test$Y))^2)
+r2_rf = 1 - (ssr_rf / sst_rf)
+adj_r2_rf_10 = 1 - (1 - r2_rf) * (nrow(test) - 1) / (nrow(test) - 6 - 1)
+print(paste("RF Run 10 Adjusted R2:", adj_r2_rf_10))
+
+
+
+
+avg_r2_rf = mean(c(adj_r2_rf_1, adj_r2_rf_2, adj_r2_rf_3, adj_r2_rf_4, adj_r2_rf_5,adj_r2_rf_6, adj_r2_rf_7, adj_r2_rf_8, adj_r2_rf_9, adj_r2_rf_10))
+
+
+print(paste("SVR Average Adjusted R2:", avg_r2_rf))
+
+if (avg_r2_rf > avg_r2_svr) {
+  print("Random Forest performs better than SVR.")
+} else if (avg_r2_rf < avg_r2_svr) {
+  print("SVR performs better than Random Forest.")
+} else {
+  print("Both models perform equally well.")
+}
+
