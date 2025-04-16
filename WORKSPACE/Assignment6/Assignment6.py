@@ -46,20 +46,16 @@ from matplotlib.colors import ListedColormap
 
 
 
-
-##################################### Visualizing training set  #################################### 
+#################################### Visualizing training set  #################################### 
 X_set, y_set = X_train, y_train
 
-# Step 1: Generate meshgrid
 X1, X2 = np.meshgrid(
     np.arange(start=X_set[:, 0].min() - 1, stop=X_set[:, 0].max() + 1, step=0.01),
     np.arange(start=X_set[:, 1].min() - 1, stop=X_set[:, 1].max() + 1, step=0.01)
 )
 
-# Step 2: Stack into two-column matrix
-two_column_matrix = np.c_[X1.ravel(), X2.ravel()]
 
-# Step 3: Add polynomial features (manually)
+two_column_matrix = np.c_[X1.ravel(), X2.ravel()]
 poly_matrix = np.column_stack((
     two_column_matrix,
     two_column_matrix[:, 0] ** 2,
@@ -67,15 +63,8 @@ poly_matrix = np.column_stack((
     two_column_matrix[:, 0] * two_column_matrix[:, 1]
 ))
 
-# Step 4: Inverse transform using existing StandardScaler
 inverse_transformed = sc.inverse_transform(poly_matrix)
-
-# Step 5: Extract first two columns (unscaled X1 and X2)
 first_two_columns = inverse_transformed[:, :2]
-
-# --- Phase 2: Transform back to scaled polynomial space ---
-
-# Step 6: Recreate polynomial features from unscaled first two columns
 poly_matrix_from_inverse = np.column_stack((
     first_two_columns,
     first_two_columns[:, 0] ** 2,
@@ -84,13 +73,7 @@ poly_matrix_from_inverse = np.column_stack((
 ))
 
 
-
-# Step 7: Apply scaler again to get scaled grid features
 X_grid = sc.transform(poly_matrix_from_inverse)
-
-
-
-
 
 plt.contourf(
     X1, X2,
@@ -102,7 +85,7 @@ plt.contourf(
 plt.xlim(X1.min(), X1.max())
 plt.ylim(X2.min(), X2.max())
 
-# (Optional) You can also plot the actual training points
+
 for i, j in enumerate(np.unique(y_set)):
     plt.scatter(
         X_set[y_set == j, 0],
@@ -121,16 +104,13 @@ plt.show()
 #################################### Visualizing test set  #################################### 
 X_set, y_set = X_test, y_test
 
-# Step 1: Generate meshgrid
 X1, X2 = np.meshgrid(
     np.arange(start=X_set[:, 0].min() - 1, stop=X_set[:, 0].max() + 1, step=0.01),
     np.arange(start=X_set[:, 1].min() - 1, stop=X_set[:, 1].max() + 1, step=0.01)
 )
 
-# Step 2: Stack into two-column matrix
-two_column_matrix = np.c_[X1.ravel(), X2.ravel()]
 
-# Step 3: Add polynomial features (manually)
+two_column_matrix = np.c_[X1.ravel(), X2.ravel()]
 poly_matrix = np.column_stack((
     two_column_matrix,
     two_column_matrix[:, 0] ** 2,
@@ -138,15 +118,8 @@ poly_matrix = np.column_stack((
     two_column_matrix[:, 0] * two_column_matrix[:, 1]
 ))
 
-# Step 4: Inverse transform using existing StandardScaler
 inverse_transformed = sc.inverse_transform(poly_matrix)
-
-# Step 5: Extract first two columns (unscaled X1 and X2)
 first_two_columns = inverse_transformed[:, :2]
-
-# --- Phase 2: Transform back to scaled polynomial space ---
-
-# Step 6: Recreate polynomial features from unscaled first two columns
 poly_matrix_from_inverse = np.column_stack((
     first_two_columns,
     first_two_columns[:, 0] ** 2,
@@ -155,13 +128,7 @@ poly_matrix_from_inverse = np.column_stack((
 ))
 
 
-
-# Step 7: Apply scaler again to get scaled grid features
 X_grid = sc.transform(poly_matrix_from_inverse)
-
-
-
-
 
 plt.contourf(
     X1, X2,
@@ -173,7 +140,7 @@ plt.contourf(
 plt.xlim(X1.min(), X1.max())
 plt.ylim(X2.min(), X2.max())
 
-# (Optional) You can also plot the actual training points
+
 for i, j in enumerate(np.unique(y_set)):
     plt.scatter(
         X_set[y_set == j, 0],
