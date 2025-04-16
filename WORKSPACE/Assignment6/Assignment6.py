@@ -20,7 +20,6 @@ X = np.column_stack((X, X[:, 0] * X[:, 1]))
  
 
 #Splitting the dataset into the training set and test
-
 from sklearn.model_selection import train_test_split
 X_train, X_test, y_train, y_test =  train_test_split(X,
                                                      y, test_size = 0.25,
@@ -52,14 +51,73 @@ print(accuracy_score(y_test, y_pred))
 
 
 
+# Visualizing the Training set results
+from matplotlib.colors import ListedColormap
+X_set, y_set = X_train, y_train
+X1, X2 = np.meshgrid(np.arange(start = X_set[:, 0].min() - 1,
+                               stop = X_set[:, 0].max() + 1, step = 0.01),
+                     np.arange(start = X_set[:, 1].min() - 1,
+                               stop = X_set[:, 1].max() + 1, step = 0.01))
+
+
+two_column_matrix = np.c_[X1.ravel(), X2.ravel()]
+
+
+
+
+
+
+# Step 2: Apply same polynomial transformation as before
+two_column_matrix = np.column_stack((
+    two_column_matrix,
+    two_column_matrix[:, 0] ** 2,
+    two_column_matrix[:, 1] ** 2,
+    two_column_matrix[:, 0] * two_column_matrix[:, 1]
+))
+
+
+
+two_column_matrix_scaled = sc.transform(two_column_matrix)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 from matplotlib.colors import ListedColormap
-
 # Phase 1: Generate mesh grid and prepare it for scaling
-X1, X2 = np.meshgrid(
-    np.arange(start=X[:, 0].min() - 1, stop=X[:, 0].max() + 1, step=0.1),
-    np.arange(start=X[:, 1].min() - 1, stop=X[:, 1].max() + 1, step=0.1)
-)
+X1_m, X2_m = np.meshgrid(X, y)
+
+
+
+
 
 # Step 2: Flatten X1 and X2 and stack into 2D array
 X_grid_base = np.array([X1.ravel(), X2.ravel()]).T
