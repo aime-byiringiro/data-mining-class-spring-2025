@@ -8,6 +8,7 @@ dataset = read.csv('Iris_Data.csv')
 dataset$Species = factor(dataset$Species,
                         levels = c('Iris-setosa', 'Iris-versicolor', 'Iris-virginica'),
                         labels = c(0, 1, 2))
+# datase$Species = as.factor()
 
 # Feature Scaling
 scaled_cols = scale(dataset[, 1:2])
