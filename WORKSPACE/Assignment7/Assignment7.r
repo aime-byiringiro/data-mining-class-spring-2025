@@ -13,7 +13,7 @@ dataset$Species = factor(dataset$Species,
 scaled_cols = scale(dataset[, 1:2])
 dataset[, 1:2] = scaled_cols
 
-#library(e1071) # install.packages('e1071')
+library(e1071) # install.packages('e1071')
 #linear kernel
 #classifier = svm(formula = Species ~ .,
                #  data = dataset,

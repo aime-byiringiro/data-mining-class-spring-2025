@@ -65,6 +65,14 @@ plot(NULL,
 points(grid_set, pch = 20, col = c('tomato', 'springgreen3')[y_grid])
 points(set, pch = 21, bg = c('red3', 'green4')[set$Purchased])
 
+
+
+
+
+
+
+
+
 # 1. The above problem can be seen as a multiple logistic regression problem.
 # 2. You can use summary(classifier_variable) to check out p values under column Pr(>|z|).
 # 3. You can add column(s) of higher degree IV(s) making the problem a polynomial logistic
